@@ -11,7 +11,7 @@
 
   - name: install openjdk
     yum:
-     name: java-1.8.0-openjdk
+     name: java-11-openjdk
      state: present
     
   - name: download jenkins.repo
@@ -28,17 +28,17 @@
     yum:
      name: jenkins
      state: present
-    
+   
+   - name: enable jenkins
+    systemd:
+     name: jenkins
+     enabled: true
+   
   - name: start jenkins
     systemd:
      name: jenkins
      state: started
-    
-  - name: enable jenkins
-    systemd:
-     name: jenkins
-     enabled: true
-    
+     
   - name: sleep for 30 seconds and continue with play
     wait_for: 
      delay: 30
