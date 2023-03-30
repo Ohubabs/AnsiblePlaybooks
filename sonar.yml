@@ -137,26 +137,31 @@
     apt:
       name: openjdk-11-jdk
       state: present
+  
+  - name: Change into opt directory
+    shell:
+      chdir: /home/sonar/opt/
+      cmd: mkdir sonarqube
 
   - name: Download and Unzip Sonarqube then copy into /opt/sonarqube 
     unarchive:
       src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.1.0.47736.zip
-      dest: /home/sonar/sonarqube
+      dest: /home/sonar/opt/sonarqube/
       remote_src: yes
 
   - name: Change ownership for sonarquebe
     file:
-      path: /home/sonar/opt/sonarqube
+      path: /home/sonar/opt/sonarqube/
       owner: sonar
       group: sonar
       mode: "u+rwx,g+rx,o=rx"
       recurse: yes
 
   - name: Start Sonarqube
-    shell: /home/sonar/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh start
+    shell: /home/sonar/opt/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh start
 
   - name: Sonarqube Status
-    shell: /home/sonar/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh status
+    shell: /home/sonar/opt/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh status
   
   handlers:
   - name: restart ssh
