@@ -39,7 +39,7 @@
       dest: /home/sonar/opt/ #Remember to end path with "/" so it will be a directory i.e. /home/sonar/opt/ vs /home/sonar/opt
       remote_src: yes
 
-  - name: Change ownership for sonarquebe
+  - name: Change ownership for sonarquebe download in opt directory of Sonar User.
     file:
       path: /home/sonar/opt/sonarqube-9.1.0.47736
       owner: sonar
