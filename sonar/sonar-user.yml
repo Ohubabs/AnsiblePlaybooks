@@ -26,12 +26,12 @@
   
   - name: Enable Password Authentication
     lineinfile:
-       dest=/etc/sshd/sshd_config
+       dest=/etc/ssh/sshd_config
        regexp='^PasswordAuthentication'
        line="PasswordAuthentication yes"
        state=present
        backup=yes
-     notify:
+    notify:
        - restart ssh  
   handlers:
   - name: restart ssh
