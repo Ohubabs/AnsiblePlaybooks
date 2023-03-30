@@ -23,23 +23,23 @@
       content: 'sonar ALL=(ALL) NOPASSWD: ALL' 
       validate: /usr/sbin/visudo -cf %s
   
-  -  name: Enable Password Authentication
-     lineinfile:
-        dest=/etc/sshd/sshd_config
-        regexp='^PasswordAuthentication'
-        line="PasswordAuthentication yes"
-        state=present
-        backup=yes
-      notify:
-        - restart ssh
+  - name: Enable Password Authentication
+    lineinfile:
+       dest=/etc/sshd/sshd_config
+       regexp='^PasswordAuthentication'
+       line="PasswordAuthentication yes"
+       state=present
+       backup=yes
+     notify:
+       - restart ssh
   
   - name: Install list of packages
     apt: 
       name: '{{item}}' 
       state: present
-      with_items:
-        - wget
-        - unzip  
+    with_items:
+      - wget
+      - unzip  
 
   - name: install JDK 11
     apt:
