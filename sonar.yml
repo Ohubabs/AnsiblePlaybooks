@@ -39,17 +39,25 @@
       state: present
     with_items:
       - wget
-      - unzip  
-
+      - unzip
+      
+  - name: Change into opt directory
+    shell:
+      cmd: mkdir /home/sonar/opt #when accessing server as default user e.g. ubuntu
+      chdir: /home/sonar/opt/
+      
+  - name: Change ownership for sonarqube
+    file:
+      path: /home/sonar/opt/
+      owner: sonar
+      group: sonar
+      mode: "u+rwx,g+rx,o=rx"
+      recurse: yes
+      
   - name: install JDK 11
     apt:
       name: openjdk-11-jdk
       state: present
-  
-  - name: Change into opt directory
-    shell:
-      chdir: /home/sonar/opt/
-      cmd: mkdir sonarqube
 
   - name: Download and Unzip Sonarqube then copy into /opt/sonarqube 
     unarchive:
