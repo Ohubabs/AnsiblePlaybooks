@@ -14,7 +14,7 @@
       
   - name: Make and Change into opt directory in Sonar User #If different user, edit accordingly.
     shell:
-      cmd: opt 
+      cmd: mkdir opt 
   
   - name: Make and Change into opt directory in Sonar User #If different user, edit accordingly.
     shell:
