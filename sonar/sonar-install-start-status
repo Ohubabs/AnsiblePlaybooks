@@ -1,3 +1,5 @@
+#After creating Sonar/Ansible User with SSH keys and updating default/custom hosts file
+
 ---
 - hosts: sonar
   become: true
@@ -12,8 +14,8 @@
       
   - name: Make and Change into opt directory in Sonar User #If different user, edit accordingly.
     shell:
-      cmd: mkdir /home/sonar/opt 
-      chdir: /home/sonar/opt/
+      cmd: opt 
+      chdir: opt
       
   - name: Change ownership for /home/sonar/opt/ directory 
     file:
@@ -27,27 +29,23 @@
     apt:
       name: openjdk-11-jdk
       state: present
- 
-  - name: Make and Change into /opt/sonarqube/ directory in Sonar User #If different user, edit accordingly.
-    shell:
-      cmd: mkdir /home/sonar/opt/sonarqube
 
   - name: Download and Unzip Sonarqube then copy into /opt/sonarqube 
     unarchive:
       src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.1.0.47736.zip
-      dest: /home/sonar/opt/sonarqube/ #Remember to end path with "/" so it will be a directory i.e. /home/sonar/opt/ vs /home/sonar/opt
+      dest: /home/sonar/opt/ #Remember to end path with "/" so it will be a directory i.e. /home/sonar/opt/ vs /home/sonar/opt
       remote_src: yes
 
   - name: Change ownership for sonarquebe
     file:
-      path: /home/sonar/opt/sonarqube/
+      path: /home/sonar/opt/sonarqube-9.1.0.47736
       owner: sonar
       group: sonar
       mode: "u+rwx,g+rx,o=rx"
       recurse: yes
 
   - name: Start Sonarqube
-    shell: /home/sonar/opt/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh start
+    shell: /opt/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh start
 
   - name: Sonarqube Status
-    shell: /home/sonar/opt/sonarqube/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh status
+    shell: /opt/sonarqube-9.1.0.47736/bin/linux-x86-64/sonar.sh status
