@@ -1,6 +1,6 @@
 ---
 - hosts: sonar
-  become
+  become: true
   tasks:
   - name: Create Sonar User
     user:
