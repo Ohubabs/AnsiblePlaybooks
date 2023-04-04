@@ -1,18 +1,17 @@
 #After creating Sonar/Ansible User with SSH keys and updating default/custom hosts file
-
+#Nexus must be installed on a redhat server and thus, uses the yum package manager.
 ---
 - hosts: nexus
   become: true
   tasks:
   - name: Install list of packages
-    apt: 
+    yum: 
       name: '{{item}}' 
       state: present
     with_items:
-      - wget
       - unzip
       
-  - name: Make into opt directory in Nexus User #If different user, edit accordingly.
+  - name: Make opt directory in Nexus User #If different user, edit accordingly.
     shell:
       cmd: mkdir opt 
   
@@ -33,13 +32,13 @@
       name: java-1.8.0-openjdk-devel
       state: present
 
-  - name: Download and Unzip Nexus into the opt directory of Sonar User
+  - name: Download and Unzip Nexus into the opt directory of Nexus User
     unarchive:
       src: http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz
       dest: /home/nexus/opt/ #Remember to end path with "/" so it will be a directory i.e. /home/nexus/opt/ vs /home/nexus/opt
       remote_src: yes
 
-  - name: Change ownership for Nexus download in opt directory of Sonar User.
+  - name: Change ownership for Nexus download in opt directory of Nexus User.
     file:
       path: /home/nexus/opt/nexus-3.15.2-01
       owner: nexus
@@ -47,7 +46,7 @@
       mode: "u+rwx,g+rx,o=rx"
       recurse: yes
       
-  - name: Change ownership for Nexus download in opt directory of Sonar User.
+  - name: Change ownership for Nexus download in opt directory of Nexus User.
     file:
       path: /home/nexus/opt/sonatype-work
       owner: nexus
@@ -55,17 +54,14 @@
       mode: "u+rwx,g+rx,o=rx"
       recurse: yes
       
-  - name: Change from #run_as_user="" to [ run_as_user="nexus" ]
+  - name: Change/uncomment "#run_as_user="" to [ run_as_user="nexus" ] in /home/nexus/opt/nexus-3.15.2-01/bin/nexus.rc file
     shell: echo  'run_as_user="nexus" ' > /home/nexus/opt/nexus-3.15.2-01/bin/nexus.rc
     
-  - name: Setup nexus as a service
-    command: ln -s /home/nexus/opt/nexus/bin/nexus /home/nexus/etc/init.d/nexus
-    
-  - name: Start Nexus Service
-    systemd: name=nexus state=started
-    
-  - name: Check Nexus Service Status
-    systemd: name=nexus state=status
+  - name: Start nexus
+    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus start
+
+  - name: Nexus status
+    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus status
 
   #- name: Configure Nexus initial admin user
     #uri:
