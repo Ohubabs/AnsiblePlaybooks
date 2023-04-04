@@ -57,6 +57,14 @@
   - name: Change/uncomment "#run_as_user="" to [ run_as_user="nexus" ] in /home/nexus/opt/nexus-3.15.2-01/bin/nexus.rc file
     shell: echo  'run_as_user="nexus" ' > /home/nexus/opt/nexus-3.15.2-01/bin/nexus.rc
     
+  - name: Start nexus
+    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus start
+
+  - name: Nexus status
+    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus status
+
+---
+
   #- name: Make nexus into a service
     #command: sudo ln -s /home/nexus/opt/nexus-3.15.2-01/bin/nexus /etc/systemd/nexus
     
@@ -65,12 +73,7 @@
     
   #- name: start nexus service
     #systemd: name=nexus state=started
-    
-  - name: Start nexus
-    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus start
 
-  - name: Nexus status
-    command: /home/nexus/opt/nexus-3.15.2-01/bin/nexus status
 
   #- name: Configure Nexus initial admin user
     #uri:
