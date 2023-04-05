@@ -83,7 +83,7 @@
       #body: '{ "password": Arsenal04 }'
       #headers:
         #Content-Type: "application/json"
-      #status_code: 204
+      #status_code: 415
       #user: princebabs
       #password: Arsenal04 
 
