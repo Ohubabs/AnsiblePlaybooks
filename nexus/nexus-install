@@ -1,5 +1,5 @@
 #After creating Sonar/Ansible User with SSH keys and updating default/custom hosts file
-#Nexus must be installed on a redhat server and thus, uses the yum package manager.
+#Nexus must be installed on a redhat server with min 4GB and thus, uses the yum package manager.
 ---
 - hosts: nexus
   become: true
