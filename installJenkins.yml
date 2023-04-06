@@ -1,3 +1,5 @@
+#Installation on a Red Hat server
+
 ---
 - hosts: appServers
   gather_facts: false
@@ -16,7 +18,7 @@
     
   - name: download jenkins.repo
     get_url:
-     url:  http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+     url:  http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo 
      dest: /etc/yum.repos.d/jenkins.repo
   
   - name: Change ownership to jenkins User.
@@ -30,7 +32,7 @@
   - name: import jenkins key
     rpm_key:
      state: present
-     key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+     key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key #Get latest ket at: https://pkg.jenkins.io/redhat-stable/
     
   - name: install jenkins
     yum:
