@@ -69,10 +69,14 @@
     #command: sudo ln -s /home/nexus/opt/nexus-3.51.0-01/bin/nexus /etc/systemd/nexus
     
   #- name: enable nexus service
-    #systemd: name=nexus state=enabled
+    #systemd: 
+       name:nexus 
+       enable: yes
     
   #- name: start nexus service
-    #systemd: name=nexus state=started
+    #systemd: 
+       name: nexus 
+       state: started
 
 
   #- name: Configure Nexus initial admin user
