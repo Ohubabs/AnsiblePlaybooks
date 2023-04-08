@@ -1,7 +1,7 @@
 #Installation on a Red Hat server
 
 ---
-- hosts: appServers
+- hosts: jenkins
   gather_facts: false
   become: true
   tasks:
