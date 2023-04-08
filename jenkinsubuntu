@@ -1,23 +1,22 @@
 ---
-- hosts: appServers
+- hosts: jenkins
   gather_facts: false
   become: true
   tasks:
-  
   - name: install wget
     apt:
-     name: wget
-     state: present
+      name: wget
+      state: present
 
   - name: install openjdk
     apt:
-     name: openjdk-11-jdk
-     state: present
+      name: openjdk-11-jdk
+      state: present
     
-  - name: download jenkins.repo
+  - name: download jenkins binary
     get_url:
-     url:  https://pkg.jenkins.io/debian-stable binary/ 
-     dest: /etc/apt/sources.list.d/jenkins.list
+      url:  https://pkg.jenkins.io/debian-stable binary/ 
+      dest: /etc/apt/sources.list.d/jenkins.list
   
   - name: Change ownership to jenkins User.
     file:
@@ -29,8 +28,8 @@
       
   - name: import jenkins key
     rpm_key:
-     state: present
-     key: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key #Get latest ket at: https://pkg.jenkins.io/redhat-stable/
+      state: present
+      key: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key #Get latest ket at: https://pkg.jenkins.io/redhat-stable/
     
   - name: Apt-get Update
     apt:
@@ -38,23 +37,23 @@
   
   - name: install jenkins
     apt:
-     name: jenkins
-     state: present
+      name: jenkins
+      state: present
    
    - name: enable jenkins
     systemd:
-     name: jenkins
-     enabled: yes
+      name: jenkins
+      enabled: true
    
   - name: start jenkins
     systemd:
-     name: jenkins
-     state: started
+      name: jenkins
+      state: started
      
   - name: sleep for 30 seconds and continue with play
     wait_for: 
-     delay: 30
-     port: 8080
+      delay: 30
+      port: 8080
     
   - name: init password jenkin
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -63,7 +62,7 @@
     
   - name: print init password jenkins
     debug:
-     var: result.stdout
+      var: result.stdout
      
      
      ---
