@@ -34,15 +34,16 @@
       key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key #Get latest ket at: https://pkg.jenkins.io/redhat-stable/
     
   - name: Sudo yum update
-    state: present
-    update_cache: true
+    yum:
+      state: present
+      update_cache: true
   
   - name: install jenkins
     yum:
       name: jenkins
       state: present
    
-   - name: enable jenkins
+  - name: enable jenkins
     systemd:
       name: jenkins
       enabled: true
