@@ -1,4 +1,6 @@
 #Installation on a Red Hat server
+#Issue with Git configuration after successful jenkins installation causing git not to be found in the /usr/local/bin path needed to execute commands. 
+#Unable to solve as of /4/8/23 so recommmened to use ubuntu installation playbook.
 
 ---
 - hosts: jenkins
